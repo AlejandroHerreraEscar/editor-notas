@@ -32,6 +32,7 @@ export class AppComponent implements OnInit {
         this.notasService.editarNota(this.notaEditIndex, this.notaActual);
         this.editandoNota = false;
       }
+      this.notas = this.notasService.obtenerNotas(); // Actualizamos la lista de notas después de guardar o editar
       this.limpiarFormulario();
     }
   }
@@ -45,6 +46,7 @@ export class AppComponent implements OnInit {
   eliminarNota(index: number) {
     if (confirm('¿Estás seguro de eliminar esta nota?')) {
       this.notasService.eliminarNota(index);
+      this.notas = this.notasService.obtenerNotas(); // Actualizamos la lista de notas después de eliminar
       this.limpiarFormulario();
       this.editandoNota = false;
     }
@@ -60,6 +62,7 @@ export class AppComponent implements OnInit {
     this.notaEditIndex = null;
   }
 }
+
 
 
 
