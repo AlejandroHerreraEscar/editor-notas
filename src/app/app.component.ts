@@ -13,6 +13,7 @@ interface Nota {
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
+  [x: string]: any;
   notaActual: Nota = { titulo: '', contenido: '' };
   notas: Nota[] = [];
   editandoNota = false;
