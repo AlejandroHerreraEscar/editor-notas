@@ -1,26 +1,65 @@
-import { TestBed } from '@angular/core/testing';
-import { AppComponent } from './app.component';
+// src/app/app.component.ts
+import { Component, OnInit } from '@angular/core';
+import { NotasService } from './services/notas.service';
 
-describe('AppComponent', () => {
-  beforeEach(() => TestBed.configureTestingModule({
-    declarations: [AppComponent]
-  }));
+interface Nota {
+  titulo: string;
+  contenido: string;
+}
 
-  it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
-  });
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent implements OnInit {
+actualizarNota() {
+throw new Error('Method not implemented.');
+}
+  notaActual: Nota = { titulo: '', contenido: '' };
+  notas: Nota[] = [];
+  editandoNota = false;
+  notaEditIndex: number | null = null;
 
-  it(`should have as title 'editor-notas'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app['title']).toEqual('editor-notas');
-  });
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('editor-notas app is running!');
-  });
-});
+  constructor(private notasService: NotasService) {}
+
+  ngOnInit(): void {
+    this.notas = this.notasService.obtenerNotas();
+  }
+
+  guardarNota() {
+    if (this.notaActual.titulo.trim() !== '' && this.notaActual.contenido.trim() !== '') {
+      if (!this.editandoNota) {
+        this.notasService.guardarNota(this.notaActual);
+      } else {
+        this.notasService.editarNota(this.notaEditIndex!, this.notaActual);
+        this.editandoNota = false;
+      }
+      this.limpiarFormulario();
+    }
+  }
+
+  editarNota(index: number) {
+    this.editandoNota = true;
+    this.notaEditIndex = index;
+    this.notaActual = { ...this.notas[index] };
+  }
+
+  eliminarNota(index: number) {
+    if (confirm('¿Estás seguro de eliminar esta nota?')) {
+      this.notasService.eliminarNota(index);
+      this.limpiarFormulario();
+      this.editandoNota = false;
+    }
+  }
+
+  cancelarEdicion() {
+    this.limpiarFormulario();
+    this.editandoNota = false;
+  }
+
+  private limpiarFormulario() {
+    this.notaActual = { titulo: '', contenido: '' };
+    this.notaEditIndex = null;
+  }
+}

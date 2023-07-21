@@ -10,9 +10,8 @@
     <textarea class="form-control" id="contenidoNota" FormsModule="notaActual.contenido"></textarea>
   </div>
   <div class="btn-group" role="group">
-    <button class="btn btn-primary" (click)="guardarNota()" [hidden]="editandoNota">Guardar</button>
-    <button class="btn btn-success" (click)="actualizarNota()" [hidden]="!editandoNota">Actualizar</button>
-    <button class="btn btn-danger" (click)="cancelarEdicion()" [hidden]="!editandoNota">Cancelar</button>
+    <button class="btn btn-primary" (click)="guardarNota()" *ngIf="!editandoNota">Guardar</button>
+    <button class="btn btn-danger" (click)="cancelarEdicion()" *ngIf="editandoNota">Cancelar</button>
   </div>
   <hr>
   <div *ngIf="notas.length > 0">

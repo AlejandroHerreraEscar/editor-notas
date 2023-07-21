@@ -9,27 +9,35 @@ export class NotasService {
 
   constructor() { }
 
-  obtenerNotas(): any[] {
+  private obtenerNotasFromLocalStorage(): any[] {
     const notasJson = localStorage.getItem(this.notasLocalStorageKey);
     return notasJson ? JSON.parse(notasJson) : [];
   }
 
-  guardarNota(nuevaNota: any): void {
-    const notas = this.obtenerNotas();
-    notas.push(nuevaNota);
+  private guardarNotasInLocalStorage(notas: any[]): void {
     localStorage.setItem(this.notasLocalStorageKey, JSON.stringify(notas));
+  }
+
+  obtenerNotas(): any[] {
+    return this.obtenerNotasFromLocalStorage();
+  }
+
+  guardarNota(nuevaNota: any): void {
+    const notas = this.obtenerNotasFromLocalStorage();
+    notas.push(nuevaNota);
+    this.guardarNotasInLocalStorage(notas);
   }
 
   editarNota(index: number, notaEditada: any): void {
-    const notas = this.obtenerNotas();
+    const notas = this.obtenerNotasFromLocalStorage();
     notas[index] = notaEditada;
-    localStorage.setItem(this.notasLocalStorageKey, JSON.stringify(notas));
+    this.guardarNotasInLocalStorage(notas);
   }
 
   eliminarNota(index: number): void {
-    const notas = this.obtenerNotas();
+    const notas = this.obtenerNotasFromLocalStorage();
     notas.splice(index, 1);
-    localStorage.setItem(this.notasLocalStorageKey, JSON.stringify(notas));
+    this.guardarNotasInLocalStorage(notas);
   }
 }
 

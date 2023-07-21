@@ -13,7 +13,6 @@ interface Nota {
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  [x: string]: any;
   notaActual: Nota = { titulo: '', contenido: '' };
   notas: Nota[] = [];
   editandoNota = false;
@@ -27,22 +26,14 @@ export class AppComponent implements OnInit {
 
   guardarNota() {
     if (this.notaActual.titulo.trim() !== '' && this.notaActual.contenido.trim() !== '') {
-      this.notasService.guardarNota(this.notaActual);
+      if (!this.editandoNota) {
+        this.notasService.guardarNota(this.notaActual);
+      } else if (this.notaEditIndex !== null) {
+        this.notasService.editarNota(this.notaEditIndex, this.notaActual);
+        this.editandoNota = false;
+      }
       this.limpiarFormulario();
     }
-  }
-
-  actualizarNota() {
-    if (this.notaEditIndex !== null) {
-      this.notasService.editarNota(this.notaEditIndex, this.notaActual);
-      this.limpiarFormulario();
-      this.editandoNota = false;
-    }
-  }
-
-  cancelarEdicion() {
-    this.limpiarFormulario();
-    this.editandoNota = false;
   }
 
   editarNota(index: number) {
@@ -59,11 +50,17 @@ export class AppComponent implements OnInit {
     }
   }
 
+  cancelarEdicion() {
+    this.limpiarFormulario();
+    this.editandoNota = false;
+  }
+
   private limpiarFormulario() {
     this.notaActual = { titulo: '', contenido: '' };
     this.notaEditIndex = null;
   }
 }
+
 
 
 

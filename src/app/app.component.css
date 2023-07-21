@@ -1,23 +1,23 @@
 /* src/app/app.component.css */
 .container {
-    max-width: 600px;
-    margin: auto;
-  }
-  
-  h1, h2, h4 {
-    text-align: center;
-  }
-  
-  textarea {
-    height: 150px;
-  }
-  
-  .list-group-item {
-    margin-top: 10px;
-  }
-  
-  .btn-group {
-    margin-top: 10px;
-  }
-  
+  max-width: 600px;
+  margin: auto;
+}
+
+h1, h2, h4 {
+  text-align: center;
+}
+
+textarea {
+  height: 150px;
+}
+
+.list-group-item {
+  margin-top: 10px;
+}
+
+.btn-group {
+  margin-top: 10px;
+}
+
   

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { EditorNotasComponent } from './editor-notas/editor-notas.component';
 
@@ -10,7 +10,7 @@ import { EditorNotasComponent } from './editor-notas/editor-notas.component';
     EditorNotasComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule, FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
